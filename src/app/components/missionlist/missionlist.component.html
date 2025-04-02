@@ -1,0 +1,46 @@
+<div class="mission-list-container">
+  <h1 class="page-title">SpaceX Missions</h1>
+  
+  <app-missionfilter (yearSelected)="onYearSelected($event)"></app-missionfilter>
+  
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="!loading && !error" class="mission-grid">
+    <mat-card *ngFor="let launch of launches" class="mission-card">
+      <mat-card-header>
+        <div *ngIf="launch.links.mission_patch_small" mat-card-avatar class="mission-patch" [style.background-image]="'url(' + launch.links.mission_patch_small + ')'"></div>
+        <mat-card-title>{{ launch.mission_name }}</mat-card-title>
+        <mat-card-subtitle>Flight #{{ launch.flight_number }} ({{ launch.launch_year }})</mat-card-subtitle>
+      </mat-card-header>
+      
+      <img *ngIf="launch.links.mission_patch_small" mat-card-image [src]="launch.links.mission_patch_small" [alt]="launch.mission_name">
+      
+      <mat-card-content>
+        <p class="mission-details">{{ launch.details || 'No mission details available.' }}</p>
+        <mat-divider></mat-divider>
+        <div class="rocket-info">
+          <p><strong>Rocket:</strong> {{ launch.rocket.rocket_name }} ({{ launch.rocket.rocket_type }})</p>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="viewMissionDetails(launch.flight_number)">
+          <mat-icon>info</mat-icon> VIEW DETAILS
+        </button>
+        <a *ngIf="launch.links.article_link" mat-button color="accent" [href]="launch.links.article_link" target="_blank">
+          <mat-icon>article</mat-icon> ARTICLE
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+  <div *ngIf="!loading && !error && launches.length === 0" class="no-missions">
+    <p>No missions found for the selected criteria.</p>
+  </div>
+</div>

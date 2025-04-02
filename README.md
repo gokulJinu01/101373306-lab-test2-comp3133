@@ -1,6 +1,74 @@
-# 101373306LabTest2Comp3133
+# 101373306 Lab Test 2 - SpaceX Missions Explorer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+This Angular application displays information about SpaceX launches using the SpaceX REST API.
+
+## Features
+
+- View a list of all SpaceX launches
+- Filter launches by year
+- View detailed information about a specific mission
+- Links to external resources (articles, Wikipedia, videos)
+
+## Technologies Used
+
+- Angular 19.2
+- Angular Material UI
+- RxJS
+- SpaceX API
+
+## API Endpoints Used
+
+- SpaceX Launches API: `https://api.spacexdata.com/v3/launches`
+- SpaceX Launch Filter API: `https://api.spacexdata.com/v3/launches?launch_year=<year>`
+- SpaceX Mission Details API: `https://api.spacexdata.com/v3/launches/<id>`
+
+## Project Structure
+
+- **Components**
+  - `MissionList`: Displays a list of all SpaceX launches
+  - `MissionFilter`: Allows filtering missions by launch year
+  - `MissionDetails`: Shows detailed information about a selected mission
+  
+- **Services**
+  - `SpacexService`: Handles API calls to the SpaceX API
+  
+- **Models**
+  - `Launch`: Interface defining the structure of SpaceX launch data
+
+## Setup and Running
+
+### Prerequisites
+
+- Node.js and npm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies
+```
+npm install
+```
+
+### Running the Application
+
+```
+ng serve
+```
+Navigate to `http://localhost:4200/` in your browser.
+
+### Building for Production
+
+```
+ng build
+```
+
+## Deployment
+
+The application is deployed on [Deployment Platform URL].
+
+## Development
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
 
 ## Development server
 
@@ -25,16 +93,6 @@ For a complete list of available schematics (such as `components`, `directives`,
 ```bash
 ng generate --help
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
 ## Running unit tests
 

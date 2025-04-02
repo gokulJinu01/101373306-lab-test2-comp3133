@@ -1,0 +1,14 @@
+<div class="filter-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Filter by Launch Year</mat-label>
+    <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
+      <mat-option *ngFor="let year of years" [value]="year">
+        {{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" class="clear-btn" (click)="clearFilter()" [disabled]="!selectedYear">
+    <mat-icon>clear</mat-icon> Clear Filter
+  </button>
+</div>
