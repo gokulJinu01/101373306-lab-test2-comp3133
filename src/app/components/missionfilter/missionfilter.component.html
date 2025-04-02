@@ -1,14 +1,80 @@
-<div class="filter-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Filter by Launch Year</mat-label>
-    <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
-      <mat-option *ngFor="let year of years" [value]="year">
-        {{ year }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-  <button mat-raised-button color="primary" class="clear-btn" (click)="clearFilter()" [disabled]="!selectedYear">
-    <mat-icon>clear</mat-icon> Clear Filter
-  </button>
+<div class="filter-card">
+  <div class="filter-header">
+    <h2>Filter Missions</h2>
+    <button class="btn-reset" (click)="resetFilters()">
+      Reset
+    </button>
+  </div>
+
+  <div class="filter-body">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="year-filter">Launch Year</label>
+        <div class="input-group">
+          <input 
+            type="number" 
+            id="year-filter" 
+            [(ngModel)]="selectedYear" 
+            placeholder="Enter year"
+            min="2006"
+            [max]="currentYear">
+          <button class="btn-search" (click)="applyFilters()">
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-toggle-group">
+        <label>Launch Success</label>
+        <div class="toggle-buttons">
+          <div 
+            class="toggle-button" 
+            [class.active]="launchSuccess === 'true'"
+            (click)="setLaunchSuccess('true')">
+            Success
+          </div>
+          <div 
+            class="toggle-button" 
+            [class.active]="launchSuccess === 'false'"
+            (click)="setLaunchSuccess('false')">
+            Failed
+          </div>
+          <div 
+            class="toggle-button any-button" 
+            [class.active]="launchSuccess === null"
+            (click)="setLaunchSuccess(null)">
+            Any
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-toggle-group">
+        <label>Landing Success</label>
+        <div class="toggle-buttons">
+          <div 
+            class="toggle-button" 
+            [class.active]="landSuccess === 'true'"
+            (click)="setLandSuccess('true')">
+            Success
+          </div>
+          <div 
+            class="toggle-button" 
+            [class.active]="landSuccess === 'false'"
+            (click)="setLandSuccess('false')">
+            Failed
+          </div>
+          <div 
+            class="toggle-button any-button" 
+            [class.active]="landSuccess === null"
+            (click)="setLandSuccess(null)">
+            Any
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,27 +1,232 @@
 .filter-container {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding: 16px;
+  padding: 20px;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-mat-form-field {
+h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #333;
+}
+
+h3 {
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.filter-row label {
+  min-width: 150px;
+  font-weight: 500;
+}
+
+.filter-row input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   flex: 1;
-  min-width: 200px;
+  width: 70%;
+}
+
+.filter-row button {
+  background-color: #555;
+  color: white;
+  min-width: 100px;
+}
+
+.filter-section {
+  margin-bottom: 15px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 5px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.radio-option input[type="radio"] {
+  margin: 0;
+}
+
+.radio-option label {
+  margin: 0;
+  cursor: pointer;
+}
+
+.reset-button {
+  align-self: flex-start;
+  margin-top: 10px;
+  background-color: #555;
+  color: white;
 }
 
 @media (max-width: 599px) {
-  .filter-container {
+  .filter-row {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
   }
   
-  button.clear-btn {
+  .filter-row label {
+    margin-bottom: 5px;
+  }
+  
+  .filter-row input,
+  .filter-row button {
     width: 100%;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.filter-card {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #3f51b5;
+  color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.filter-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.btn-reset {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.filter-body {
+  padding: 15px;
+}
+
+.filter-row {
+  margin-bottom: 15px;
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.input-group {
+  display: flex;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+}
+
+.btn-search {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+}
+
+.filter-toggle-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-toggle-group label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.toggle-button.active {
+  background-color: #e8eaf6;
+  border-color: #3f51b5;
+  color: #3f51b5;
+  font-weight: 500;
+}
+
+.any-button {
+  background-color: #f5f5f5;
+}
+
+@media (max-width: 480px) {
+  .toggle-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .toggle-button {
+    flex: 1;
+    justify-content: center;
+    padding: 6px;
   }
 }

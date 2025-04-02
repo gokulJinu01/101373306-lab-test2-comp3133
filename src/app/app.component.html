@@ -1,8 +1,27 @@
 <div class="app-container">
-  <mat-toolbar color="primary">
-    <span>SpaceX Missions Explorer</span>
-  </mat-toolbar>
-  <div class="content">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <img src="assets/spacex-logo.png" alt="SpaceX Logo" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg'; this.onerror=null;" class="logo-img">
+        <h1>SpaceX Explorer</h1>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a routerLink="/missions" routerLinkActive="active">Missions</a></li>
+          <li><a href="https://www.spacex.com/" target="_blank">Official Site</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
     <router-outlet></router-outlet>
-  </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>© 2023 SpaceX Explorer | COMP 3133 Lab Test 2</p>
+      <p>Built with Angular and SpaceX API</p>
+    </div>
+  </footer>
 </div>

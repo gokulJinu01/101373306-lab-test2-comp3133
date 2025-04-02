@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Launch } from '../models/launch.model';
 
@@ -13,6 +13,24 @@ export class SpacexService {
 
   getAllLaunches(): Observable<Launch[]> {
     return this.http.get<Launch[]>(this.baseUrl);
+  }
+
+  getFilteredLaunches(filters: any): Observable<Launch[]> {
+    let params = new HttpParams();
+    
+    if (filters.year) {
+      params = params.append('launch_year', filters.year);
+    }
+    
+    if (filters.launchSuccess !== null) {
+      params = params.append('launch_success', filters.launchSuccess);
+    }
+    
+    if (filters.landSuccess !== null) {
+      params = params.append('land_success', filters.landSuccess);
+    }
+    
+    return this.http.get<Launch[]>(this.baseUrl, { params });
   }
 
   getLaunchesByYear(year: string): Observable<Launch[]> {

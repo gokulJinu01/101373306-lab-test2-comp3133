@@ -30,6 +30,11 @@ export class MissionlistComponent implements OnInit {
   launches: Launch[] = [];
   loading = true;
   error: string | null = null;
+  currentFilters = {
+    year: '',
+    launchSuccess: null,
+    landSuccess: null
+  };
 
   constructor(private spacexService: SpacexService, private router: Router) {}
 
@@ -52,9 +57,11 @@ export class MissionlistComponent implements OnInit {
     });
   }
 
-  onYearSelected(year: string): void {
+  onFiltersChanged(filters: any): void {
+    this.currentFilters = filters;
     this.loading = true;
-    this.spacexService.getLaunchesByYear(year).subscribe({
+    
+    this.spacexService.getFilteredLaunches(filters).subscribe({
       next: (data) => {
         this.launches = data;
         this.loading = false;

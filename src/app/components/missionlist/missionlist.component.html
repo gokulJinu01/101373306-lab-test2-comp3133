@@ -1,46 +1,91 @@
-<div class="mission-list-container">
-  <h1 class="page-title">SpaceX Missions</h1>
-  
-  <app-missionfilter (yearSelected)="onYearSelected($event)"></app-missionfilter>
-  
+<div class="mission-container">
+  <div class="page-header">
+    <h1 class="page-title">SpaceX Missions</h1>
+    <p class="page-subtitle">View SpaceX launch history</p>
+  </div>
+
+  <div class="filter-container">
+    <app-missionfilter (filterChanged)="onFiltersChanged($event)"></app-missionfilter>
+  </div>
+
   <div *ngIf="loading" class="loading-container">
-    <mat-spinner></mat-spinner>
+    <div class="spinner"></div>
+    <p>Loading missions...</p>
   </div>
-  
-  <div *ngIf="error" class="error-message">
-    {{ error }}
+
+  <div *ngIf="error" class="error-container">
+    <div class="error-text">!</div>
+    <div class="error-content">
+      <h3>Error</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
-  
+
   <div *ngIf="!loading && !error" class="mission-grid">
-    <mat-card *ngFor="let launch of launches" class="mission-card">
-      <mat-card-header>
-        <div *ngIf="launch.links.mission_patch_small" mat-card-avatar class="mission-patch" [style.background-image]="'url(' + launch.links.mission_patch_small + ')'"></div>
-        <mat-card-title>{{ launch.mission_name }}</mat-card-title>
-        <mat-card-subtitle>Flight #{{ launch.flight_number }} ({{ launch.launch_year }})</mat-card-subtitle>
-      </mat-card-header>
-      
-      <img *ngIf="launch.links.mission_patch_small" mat-card-image [src]="launch.links.mission_patch_small" [alt]="launch.mission_name">
-      
-      <mat-card-content>
-        <p class="mission-details">{{ launch.details || 'No mission details available.' }}</p>
-        <mat-divider></mat-divider>
-        <div class="rocket-info">
-          <p><strong>Rocket:</strong> {{ launch.rocket.rocket_name }} ({{ launch.rocket.rocket_type }})</p>
+    <div *ngFor="let launch of launches" class="mission-card">
+      <div class="mission-card-header">
+        <div *ngIf="launch.links.mission_patch_small" class="mission-patch">
+          <img [src]="launch.links.mission_patch_small" [alt]="launch.mission_name">
         </div>
-      </mat-card-content>
-      
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="viewMissionDetails(launch.flight_number)">
-          <mat-icon>info</mat-icon> VIEW DETAILS
+        <div class="mission-info">
+          <h2 class="mission-name">{{ launch.mission_name }}</h2>
+          <div class="mission-meta">
+            <span>{{ launch.launch_year }}</span>
+            <span>Flight #{{ launch.flight_number }}</span>
+          </div>
+        </div>
+        <div class="mission-status">
+          <span class="badge" [class.success]="launch.launch_success" [class.error]="!launch.launch_success">
+            {{ launch.launch_success ? 'Success' : 'Failed' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="mission-card-body">
+        <p class="mission-details">{{ launch.details || 'No mission details available.' }}</p>
+        
+        <div class="mission-data">
+          <div class="data-item">
+            <span class="label">Rocket</span>
+            <span class="value">{{ launch.rocket.rocket_name }}</span>
+          </div>
+          <div class="data-item">
+            <span class="label">Type</span>
+            <span class="value">{{ launch.rocket.rocket_type }}</span>
+          </div>
+          <div *ngIf="launch.rocket.first_stage && launch.rocket.first_stage.cores && launch.rocket.first_stage.cores[0].land_success !== null" class="data-item">
+            <span class="label">Landing</span>
+            <span class="badge" [class.success]="launch.rocket.first_stage.cores[0].land_success" [class.error]="!launch.rocket.first_stage.cores[0].land_success">
+              {{ launch.rocket.first_stage.cores[0].land_success ? 'Success' : 'Failed' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mission-card-footer">
+        <button (click)="viewMissionDetails(launch.flight_number)">
+          Details
         </button>
-        <a *ngIf="launch.links.article_link" mat-button color="accent" [href]="launch.links.article_link" target="_blank">
-          <mat-icon>article</mat-icon> ARTICLE
-        </a>
-      </mat-card-actions>
-    </mat-card>
+        <div class="mission-links">
+          <a *ngIf="launch.links.video_link" [href]="launch.links.video_link" target="_blank" class="link-text">
+            Video
+          </a>
+          <a *ngIf="launch.links.article_link" [href]="launch.links.article_link" target="_blank" class="link-text">
+            Article
+          </a>
+          <a *ngIf="launch.links.wikipedia" [href]="launch.links.wikipedia" target="_blank" class="link-text">
+            Wiki
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <div *ngIf="!loading && !error && launches.length === 0" class="no-missions">
-    <p>No missions found for the selected criteria.</p>
+
+  <div *ngIf="!loading && !error && launches.length === 0" class="no-results">
+    <div class="no-results-text">
+      No Results
+    </div>
+    <h3>No Results Found</h3>
+    <p>Try adjusting your filters.</p>
   </div>
 </div>

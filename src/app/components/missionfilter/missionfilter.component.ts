@@ -1,10 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-missionfilter',
@@ -12,39 +9,63 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     FormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule
+    MatButtonModule
   ],
   templateUrl: './missionfilter.component.html',
   styleUrl: './missionfilter.component.css'
 })
 export class MissionfilterComponent implements OnInit {
-  @Output() yearSelected = new EventEmitter<string>();
+  @Output() filterChanged = new EventEmitter<any>();
   
   selectedYear: string = '';
+  launchSuccess: string | null = null;
+  landSuccess: string | null = null;
   years: string[] = [];
+  currentYear = new Date().getFullYear();
   
   ngOnInit(): void {
     this.generateYearList();
   }
   
   generateYearList(): void {
-    const currentYear = new Date().getFullYear();
     const startYear = 2006; // SpaceX first launch
     
-    for (let year = currentYear; year >= startYear; year--) {
+    for (let year = this.currentYear; year >= startYear; year--) {
       this.years.push(year.toString());
     }
   }
   
-  onYearChange(): void {
-    this.yearSelected.emit(this.selectedYear);
+  setLaunchSuccess(value: string | null): void {
+    this.launchSuccess = value;
+    this.applyFilters();
   }
   
-  clearFilter(): void {
+  setLandSuccess(value: string | null): void {
+    this.landSuccess = value;
+    this.applyFilters();
+  }
+  
+  applyFilters(): void {
+    const filters = {
+      year: this.selectedYear,
+      launchSuccess: this.launchSuccess === 'true' ? true : 
+                     this.launchSuccess === 'false' ? false : null,
+      landSuccess: this.landSuccess === 'true' ? true : 
+                   this.landSuccess === 'false' ? false : null
+    };
+    
+    this.filterChanged.emit(filters);
+  }
+  
+  resetFilters(): void {
     this.selectedYear = '';
-    this.yearSelected.emit('');
+    this.launchSuccess = null;
+    this.landSuccess = null;
+    
+    this.filterChanged.emit({
+      year: '',
+      launchSuccess: null,
+      landSuccess: null
+    });
   }
 }
